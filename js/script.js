@@ -153,9 +153,9 @@
                 autoplay: true,
                 loop: true,
                 mouseDrag: false,
-                smartSpeed: 500,
-                navSpeed: 500,
-                dotsSpeed: 500
+                smartSpeed: 1500,
+                navSpeed: 1500,
+                dotsSpeed: 1500
             });
         }
     }
