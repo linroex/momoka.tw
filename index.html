@@ -265,5 +265,13 @@
       gtag('config', 'UA-135771329-1');
     </script>
 
+    <script>
+    $(document).ready(function(){
+      if(window.location.href.indexOf('fbclid') !== -1) {
+        window.history.replaceState({}, null, '');
+      }
+    })
+    </script>
+
 </body>
 </html>
