@@ -199,26 +199,29 @@
                 <h2>聯絡我們</h2>
                 <br>
                 <ul class="contact-info">
-                  <li><i class="fa fa-phone"></i>0909-808-771</li>
-                  <li><i class="fa fa-envelope"></i>karllin@momoka.tw</li>
+                  <li><i class="fa fa-phone"></i><a href="tel:+886909808771">0909-808-771</a></li>
+                  <li><i class="fa fa-envelope"></i><a href="mailto:karllin@momoka.tw">karllin@momoka.tw</a></li>
                 </ul>
               </div>
               <div class="col col-md-8">
                 <form class="form row">
                   <div class="col col-md-6">
-                    <input type="text" class="form-control" placeholder="Your Name.." required>
+                    <input type="text" class="form-control" placeholder="Your Name.." name="name" required>
                   </div>
                   <div class="col col-md-6">
-                    <input type="text" class="form-control" placeholder="Company Name.." required>
+                    <input type="text" class="form-control" placeholder="Company Name.." name="company" required>
                   </div>
                   <div class="col col-md-6">
-                    <input type="email" class="form-control" placeholder="Email address.." required>
+                    <input type="email" class="form-control" placeholder="Email address.." name="email" required>
                   </div>
                   <div class="col col-md-6">
-                    <input type="text" class="form-control" placeholder="Phone.." required>
+                    <input type="text" class="form-control" placeholder="Phone.." name="phone" required>
                   </div>
                   <div class="col col-md-12">
-                    <textarea class="form-control" placeholder="Request.."></textarea>
+                    <textarea class="form-control" name="content" placeholder="Request.."></textarea>
+                  </div>
+                  <div class="col col-md-12" id="success-alert" style="display: none;">
+                    <div class="alert alert-success">Success</div>
                   </div>
                   <div class="col col-md-12 submit">
                     <button class="btn transport-theme-btn pull-right">Submit</button>
@@ -229,7 +232,6 @@
           </div> <!-- end container -->
         </section>
         <!-- end hosting-contact -->
-
 
         <!-- start footer -->
         <footer class="">
@@ -266,10 +268,41 @@
     </script>
 
     <script>
+    $.fn.serializeObject = function () {
+      var o = {};
+      var a = this.serializeArray();
+      $.each(a, function () {
+        if (o[this.name]) {
+          if (!o[this.name].push) {
+            o[this.name] = [o[this.name]];
+          }
+          o[this.name].push(this.value || '');
+        } else {
+          o[this.name] = this.value || '';
+        }
+      });
+      return o;
+    };
+    
     $(document).ready(function(){
       if(window.location.href.indexOf('fbclid') !== -1) {
         window.history.replaceState({}, null, '/');
       }
+
+
+      var url = 'https://script.google.com/macros/s/AKfycbw3aZslMAKpU4zYvbvYz5Xsg1Le4E13elkCP4vljMQC3bNuKDH1/exec';
+      $('#contact .submit button').click(function(e){
+        e.preventDefault();
+          var jqxhr = $.ajax({
+          url: url,
+          method: "GET",
+          dataType: "json",
+          data: $('#contact form').serializeObject()
+        }).success(function(){
+          $('#contact #success-alert').show(200);
+          $('#contact form')[0].reset();
+        });
+      });
     })
     </script>
 
